@@ -39,5 +39,11 @@ public class ContaController {
 		return mv;
 	}
 	
-	
+	@RequestMapping("/deletarConta")
+	public String deletar(Conta conta) {
+		
+		new ContaDAO().remove(conta);
+		
+		return "redirect:/listaContas";
+	}
 }
