@@ -18,6 +18,7 @@
 			<th>Tipo</th>
 			<th>Paga?</th>
 			<th>Data de pagamento</th>
+			<th>Alterar</th>
 			<th>Remover</th>
 		</tr>
 		
@@ -33,6 +34,9 @@
 				</td>
 				<td>
 					<fmt:formatDate value="${conta.dataPagamento.time}" pattern="dd/MM/yyyy" />
+				</td>
+				<td>
+					<a href="mostraConta?id=${conta.id}">Alterar</a>
 				</td>
 				<td>
 					<a href="deletarConta?id=${conta.id}">Remover</a>
