@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,14 @@ import br.com.caelum.contas.modelo.Conta;
 @Controller
 public class ContaController {
 
+	private ContaDAO dao;
+	
+	@Autowired
+	public ContaController(ContaDAO dao) {
+		this.dao = dao;
+	}
+	
+	
 	@RequestMapping("formulario")
 	public String formulario() {
 		return "conta/formulario";
@@ -28,9 +37,7 @@ public class ContaController {
 		if(result.hasErrors()) {
 			return "conta/formulario";
 		}
-		
-		
-		ContaDAO dao = new ContaDAO();
+	
 		dao.adiciona(conta);
 		
 		return "conta/sucesso";
@@ -39,7 +46,6 @@ public class ContaController {
 	@RequestMapping("/listaContas")
 	public ModelAndView listar() {
 		
-		ContaDAO dao = new ContaDAO();
 		List<Conta> contas = dao.lista();
 		
 		ModelAndView mv = new ModelAndView("conta/lista");
@@ -51,16 +57,15 @@ public class ContaController {
 	@RequestMapping("/deletarConta")
 	public String deletar(Conta conta) {
 		
-		new ContaDAO().remove(conta);
+		dao.remove(conta);
 		
 		return "redirect:/listaContas";
 	}
 	
 	@RequestMapping("/mostraConta")
 	public ModelAndView mostrar(Long id) {
-		ContaDAO dao = new ContaDAO();
+
 		Conta conta = dao.buscaPorId(id);
-		
 		ModelAndView mv = new ModelAndView("conta/mostra");
 		mv.addObject("conta", conta);
 		
@@ -69,14 +74,13 @@ public class ContaController {
 	
 	@RequestMapping("/alteraConta")
 	public String alterar(Conta conta) {
-		new ContaDAO().altera(conta);
+		dao.altera(conta);
 		
 		return "redirect:/listaContas";
 	}
 	
 	@RequestMapping("/pagaConta")
 	public void pagar(Long id, HttpServletResponse response) {
-		ContaDAO dao = new ContaDAO();
 		dao.paga(id);
 		
 		response.setStatus(200);

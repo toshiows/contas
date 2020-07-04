@@ -9,5 +9,7 @@
 <body>
 	<h1>${usuario.login}, bem-vindo(a)! </h1>
 	<a href="listaContas">Lista de contas</a>
+	<br>
+	<a href="/contas/logout">Logout</a>
 </body>
 </html>

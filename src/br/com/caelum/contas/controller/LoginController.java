@@ -10,7 +10,7 @@ import br.com.caelum.contas.modelo.Usuario;
 
 @Controller
 public class LoginController {
-
+	
 	@RequestMapping("/login")
 	public String formLogin() {
 		return "usuario/formLogin";
@@ -26,6 +26,12 @@ public class LoginController {
 			return "menu-login";
 		}
 		
+		return "redirect:/login";
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
 		return "redirect:/login";
 	}
 }
